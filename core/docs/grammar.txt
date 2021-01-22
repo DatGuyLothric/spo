@@ -1,0 +1,31 @@
+language                -> expression+
+expression              -> assign_expression | conditional_expression | loop_expression | print_expression | function
+
+assign_expression       -> VAR ASSIGN_OP arithmetical_expression EOE
+conditional_expression  -> IF LP logical_expression RP LB expression* RB (ELSE LB expression* RB)?
+loop_expression         -> WHILE LP logical_expression RB LB expression* RB
+print_expression        -> PRINT LP arithmetical_expression RP EOE
+function                -> FUNCTION VAR LP VAR{0,1} (COMMA VAR)* RP LB expression+ RETURN VAR RB
+
+arithmetical_expression -> value (OP value)* 
+value                   -> VAR | DIGIT | parentheses_expression | count | get
+parentheses_expression  -> LP arithmetical_expression RP
+logical_expression      -> arithmetical_expression COMPARISON_OP arithmetical_expression
+
+VAR                     -> /^([A-z]+)$/
+DIGIT                   -> /^(0|[1-9][0-9]*)$/
+RP                      -> /^\)$/
+LP                      -> /^\($/
+OP                      -> /^(\+|-|\*|\/)$/
+ASSIGN_OP               -> /^=$/
+COMPARISON_OP           -> /^(==|!=|>|<|>=|<=)$/
+RB                      -> /^\}$/
+LB                      -> /^\{$/
+IF                      -> /^if$/
+ELSE                    -> /^else$/
+WHILE                   -> /^while$/
+PRINT                   -> /^print$/
+FUNCTION                -> /^function$/
+RETURN                  -> /^return$/
+COMMA                   -> /^,$/
+EOE                     -> /^;$/
